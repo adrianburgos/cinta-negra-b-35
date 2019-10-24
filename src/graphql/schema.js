@@ -12,15 +12,23 @@ const typeDefs = gql`
 		author: String
 	}
 
-	type Food {
+	type User {
+        name: String
+        lastName: String
+        email: String
+        emergencyContact: String
+    }
+    
+    input UserInput {
+        name: String
+        lastName: String
+        email: String
+        emergencyContact: String
+    }
+    
+    type Food {
 		name: String
 		cal: Int
-	}
-
-	type Person {
-		name: String
-		age: Int
-		books: [Book]
 	}
 
 	# The "Query" type is special: it lists all of the available queries that
@@ -28,9 +36,11 @@ const typeDefs = gql`
 	# case, the "books" query returns an array of zero or more Books (defined above).
 	type Query {
 		books: [Book]
-        foods: [Food]
-        persons: [Person]
-	}
+    }
+    
+    type Mutation {
+        addUser(data: UserInput): User
+    }
 `;
 
 export default typeDefs;
