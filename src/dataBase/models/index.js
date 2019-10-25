@@ -1,8 +1,12 @@
 import mongoose from 'mongoose';
-import userSchema from '../schemas/userSchema';
 
-const UserModel = mongoose.model('user', userSchema);
+import usuarioSchema from '../schemas/usuarioSchema';
+import enfermedadSchema from '../schemas/enfermedadSchema';
+
+const UsuarioModel = mongoose.model('usuarios', usuarioSchema);
+const EnfermedadModel = mongoose.model('enfermedades', enfermedadSchema);
 
 export {
-    UserModel,
+    UsuarioModel,
+    EnfermedadModel,
 }

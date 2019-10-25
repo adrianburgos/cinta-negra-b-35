@@ -1,25 +1,29 @@
-import {UserModel} from '../dataBase/models'
+import { 
+    addUsuarioAccion, 
+    updateUsuarioEnfermedadAccion 
+} from './acciones/accionesUsuario';
+import { addEnfermedadAccion } from './acciones/accionesEnfermedad';
 
 const books = [
     {
-      title: 'Harry Potter and the Chamber of Secrets',
-      author: 'J.K. Rowling',
+        title: 'Harry Potter and the Chamber of Secrets',
+        author: 'J.K. Rowling',
     },
     {
-      title: 'Jurassic Park',
-      author: 'Michael Crichton',
+        title: 'Jurassic Park',
+        author: 'Michael Crichton',
     },
 ];
 
 const foods = [
-	{
-		name: 'meat',
-		cal: 200
-	},
-	{
-		name: 'cookies',
-		cal: 500
-	}
+    {
+        name: 'meat',
+        cal: 200
+    },
+    {
+        name: 'cookies',
+        cal: 500
+    }
 ]
 
 
@@ -27,7 +31,7 @@ const foods = [
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
     Query: {
-		books: () => books
+        books: () => books
     },
     Mutation: {
         //en todas las funciones de los resolves se reciben 4 parametros,
@@ -35,10 +39,24 @@ const resolvers = {
         // data - argumentos de la funcion resolver
         // context - variables globales entre resolvers
         // info - informacion del user agent (quien pide la informacion)
-        addUser: async (parent, data, context, info) => {
+        addUsuario: async (parent, data, context, info) => {
             try {
-                const newUser = await UserModel.create(data.data);
-                console.log(newUser);
+                return await addUsuarioAccion(data.input);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        addEnfermedad: async (parent, data, context, info) => {
+            try {
+                const { input, usuarioID } = data;
+                const newEnfermedad = await addEnfermedadAccion(input);
+
+                const filter = { _id: usuarioID };
+                const update = { $push: { 'enfermedades': newEnfermedad._id } };
+
+                const updatedUsuario = await updateUsuarioEnfermedadAccion(filter, update);
+                console.log(updatedUsuario);
+                return newEnfermedad
             } catch (error) {
                 console.log(error);
             }

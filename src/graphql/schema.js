@@ -10,26 +10,42 @@ const typeDefs = gql`
 	type Book {
 		title: String
 		author: String
-	}
-
-	type User {
-        name: String
-        lastName: String
-        email: String
-        emergencyContact: String
-    }
-    
-    input UserInput {
-        name: String
-        lastName: String
-        email: String
-        emergencyContact: String
     }
     
     type Food {
 		name: String
 		cal: Int
 	}
+
+	type Usuario {
+        _id: ID
+        nombre: String
+        apellido: String
+        email: String
+        genero: String
+    }
+    
+    input UsuarioInput {
+        nombre: String
+        apellido: String
+        email: String
+        genero: String
+    }
+
+    type Enfermedad {
+        _id: ID
+        tipo: String
+        nombre: String
+        descripcion: String
+    }
+    
+    input EnfermedadInput {
+        tipo: String
+        nombre: String
+        descripcion: String
+    }
+    
+    
 
 	# The "Query" type is special: it lists all of the available queries that
 	# clients can execute, along with the return type for each. In this
@@ -39,7 +55,8 @@ const typeDefs = gql`
     }
     
     type Mutation {
-        addUser(data: UserInput): User
+        addUsuario(input: UsuarioInput): Usuario
+        addEnfermedad(input: EnfermedadInput, usuarioID: String): Enfermedad
     }
 `;
 
