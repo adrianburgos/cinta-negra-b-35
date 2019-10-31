@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 
 import typeDefs from './graphql/schema';
 import resolvers from './graphql/resolvers';
-
+import {
+	AuthDirective,
+	getContext,
+} from './graphql/acciones/accionesAutorizacion'
 
 const url = process.env.DATA_BASE;
 mongoose.connect(url, {
@@ -18,9 +21,16 @@ mongodb.on('open', () => console.log('Conectado a BD'));
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+	typeDefs,
+	resolvers,
+	schemaDirectives: {
+		AuthDirective,
+	},
+	context: async ({ req }) => getContext(req)
+});
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
+	console.log(`🚀  Server ready at ${url}`);
 });

@@ -1,6 +1,8 @@
-import { 
-    addUsuarioAccion, 
-    updateUsuarioEnfermedadAccion 
+import {
+    addUsuarioAccion,
+    updateUsuarioEnfermedadAccion,
+    iniciarSesionAccion,
+    obtenerUsuarioAccion
 } from './acciones/accionesUsuario';
 import { addEnfermedadAccion } from './acciones/accionesEnfermedad';
 
@@ -31,8 +33,17 @@ const foods = [
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
     Query: {
-        books: () => books
+        books: () => books,
+        obtenerUsuario: async (parent, data, context, info) => {
+            try {
+                const { usuario } = context;
+                return await obtenerUsuarioAccion(usuario);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
+
     Mutation: {
         //en todas las funciones de los resolves se reciben 4 parametros,
         // parent - funciones necesarias para manejo interno de graphql
@@ -57,6 +68,21 @@ const resolvers = {
                 const updatedUsuario = await updateUsuarioEnfermedadAccion(filter, update);
                 console.log(updatedUsuario);
                 return newEnfermedad
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        iniciarSesion: async (parent, data, context, info) => {
+            try {
+                const { usuario, clave } = data;
+                return await iniciarSesionAccion(usuario, clave);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        addSignoVital: async(parent, data, context, info) => {
+            try {
+                
             } catch (error) {
                 console.log(error);
             }

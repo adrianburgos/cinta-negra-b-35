@@ -4,6 +4,8 @@ import { gql } from 'apollo-server';
 // your data.
 
 const typeDefs = gql`
+
+    directive @AuthDirective on QUERY | FIELD_DEFINITION | FIELD
 	# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
 	# This "Book" type defines the queryable fields for every book in our data source.
@@ -15,7 +17,11 @@ const typeDefs = gql`
     type Food {
 		name: String
 		cal: Int
-	}
+    }
+    
+    type Token{
+        token: String,
+    }
 
 	type Usuario {
         _id: ID
@@ -23,6 +29,8 @@ const typeDefs = gql`
         apellido: String
         email: String
         genero: String
+        clave: String
+        enfermedades: [Enfermedad]
     }
     
     input UsuarioInput {
@@ -30,6 +38,7 @@ const typeDefs = gql`
         apellido: String
         email: String
         genero: String
+        clave: String
     }
 
     type Enfermedad {
@@ -44,6 +53,22 @@ const typeDefs = gql`
         nombre: String
         descripcion: String
     }
+
+    type SignoVital{
+        _id: ID
+        tipoSigno: String
+        valorInferior: String
+        valorSuperior: String
+        dimensionales: String
+        activo: Boolean
+    }
+
+    input SignoVitalInput{
+        tipoSigno: String
+        valorInferior: String
+        valorSuperior: String
+        dimensionales: String
+    }
     
     
 
@@ -51,12 +76,15 @@ const typeDefs = gql`
 	# clients can execute, along with the return type for each. In this
 	# case, the "books" query returns an array of zero or more Books (defined above).
 	type Query {
-		books: [Book]
+        books: [Book] @AuthDirective,
+        obtenerUsuario: Usuario
     }
     
     type Mutation {
-        addUsuario(input: UsuarioInput): Usuario
+        addUsuario(input: UsuarioInput): Token
         addEnfermedad(input: EnfermedadInput, usuarioID: String): Enfermedad
+        iniciarSesion(usuario: String, clave: String): Token
+        addSignoVital(input: SignoVitalInput): SignoVital
     }
 `;
 
