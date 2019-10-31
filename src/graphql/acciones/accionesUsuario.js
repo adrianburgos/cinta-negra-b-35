@@ -10,6 +10,7 @@ Date.prototype.agregarDias = function (dias) {
 }
 
 const crearToken = (dataUsuario) => {
+    //fecha de expiracion para el token (hoy + 5 dias)
     const exp = new Date().agregarDias(5).getTime();
     const payload = {
         _id: dataUsuario._id,
@@ -50,10 +51,11 @@ const buscarUsuarioAccion = async (filter) => {
     }
 }
 
-const iniciarSesionAccion = async (usuario, clave) => {
+const iniciarSesionAccion = async (correoUsuario, clave) => {
     try {
-        const filter = { email: usuario };
-        const usuario = buscarUsuarioAccion(filter);
+        const filter = { email: correoUsuario };
+        const usuario = await buscarUsuarioAccion(filter);
+        console.log(usuario);
         const valido = await bcrypt.compare(clave, usuario.clave);
         if (valido) {
             const token = crearToken(usuario);

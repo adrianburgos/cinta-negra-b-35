@@ -82,7 +82,7 @@ const typeDefs = gql`
     
     type Mutation {
         addUsuario(input: UsuarioInput): Token
-        addEnfermedad(input: EnfermedadInput, usuarioID: String): Enfermedad
+        addEnfermedad(input: EnfermedadInput): Enfermedad @AuthDirective
         iniciarSesion(usuario: String, clave: String): Token
         addSignoVital(input: SignoVitalInput): SignoVital
     }

@@ -59,10 +59,11 @@ const resolvers = {
         },
         addEnfermedad: async (parent, data, context, info) => {
             try {
-                const { input, usuarioID } = data;
+                const { input } = data;
+                const { usuario } = context;
                 const newEnfermedad = await addEnfermedadAccion(input);
 
-                const filter = { _id: usuarioID };
+                const filter = { _id: usuario._id };
                 const update = { $push: { 'enfermedades': newEnfermedad._id } };
 
                 const updatedUsuario = await updateUsuarioEnfermedadAccion(filter, update);
