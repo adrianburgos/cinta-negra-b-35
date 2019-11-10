@@ -31,6 +31,7 @@ const typeDefs = gql`
         genero: String
         clave: String
         enfermedades: [Enfermedad]
+        signosVitales: [SignoVital]
     }
     
     input UsuarioInput {
@@ -39,6 +40,7 @@ const typeDefs = gql`
         email: String
         genero: String
         clave: String
+        imagenPerfil: Upload
     }
 
     type Enfermedad {
@@ -46,6 +48,7 @@ const typeDefs = gql`
         tipo: String
         nombre: String
         descripcion: String
+        activa: Boolean
     }
     
     input EnfermedadInput {
@@ -83,8 +86,8 @@ const typeDefs = gql`
     type Mutation {
         addUsuario(input: UsuarioInput): Token
         addEnfermedad(input: EnfermedadInput): Enfermedad @AuthDirective
+        addSignoVital(signo: SignoVitalInput): SignoVital @AuthDirective
         iniciarSesion(usuario: String, clave: String): Token
-        addSignoVital(input: SignoVitalInput): SignoVital
     }
 `;
 

@@ -1,10 +1,11 @@
 import {
     addUsuarioAccion,
-    updateUsuarioEnfermedadAccion,
+    updateUsuario,
     iniciarSesionAccion,
     obtenerUsuarioAccion
 } from './acciones/accionesUsuario';
 import { addEnfermedadAccion } from './acciones/accionesEnfermedad';
+import { addSignoVitalAccion } from './acciones/accionesSignoVital';
 
 const books = [
     {
@@ -39,7 +40,7 @@ const resolvers = {
                 const { usuario } = context;
                 return await obtenerUsuarioAccion(usuario);
             } catch (error) {
-                console.log(error);
+                console.log("TCL: error", error)
             }
         }
     },
@@ -54,7 +55,7 @@ const resolvers = {
             try {
                 return await addUsuarioAccion(data.input);
             } catch (error) {
-                console.log(error);
+                console.log("TCL: error", error)
             }
         },
         addEnfermedad: async (parent, data, context, info) => {
@@ -66,11 +67,11 @@ const resolvers = {
                 const filter = { _id: usuario._id };
                 const update = { $push: { 'enfermedades': newEnfermedad._id } };
 
-                const updatedUsuario = await updateUsuarioEnfermedadAccion(filter, update);
-                console.log(updatedUsuario);
+                const updatedUsuario = await updateUsuario(filter, update);
+                console.log("TCL: updatedUsuario", updatedUsuario)
                 return newEnfermedad
             } catch (error) {
-                console.log(error);
+                console.log("TCL: error", error)
             }
         },
         iniciarSesion: async (parent, data, context, info) => {
@@ -78,14 +79,25 @@ const resolvers = {
                 const { usuario, clave } = data;
                 return await iniciarSesionAccion(usuario, clave);
             } catch (error) {
-                console.log(error);
+                console.log("TCL: error", error)
             }
         },
-        addSignoVital: async(parent, data, context, info) => {
+        addSignoVital: async (parent, data, context, info) => {
             try {
-                
+                const { signo } = data;
+                const { usuario } = context;
+                console.log("TCL: usuario", usuario)
+                const nuevoSigno = await addSignoVitalAccion(signo);
+
+                const filter = { _id: usuario._id };
+                const update = { $push: { signosVitales: nuevoSigno._id } }; //el objeto debe de llamarse igual que el esquema
+                const usuarioActualizado = await updateUsuario(filter, update);
+                console.log("TCL: usuarioActualizado", usuarioActualizado)
+
+                return nuevoSigno;
+
             } catch (error) {
-                console.log(error);
+                console.log("TCL: error", error)
             }
         }
     }

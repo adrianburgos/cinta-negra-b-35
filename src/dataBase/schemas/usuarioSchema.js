@@ -26,9 +26,16 @@ const usuarioSchema = new schema(
             type: String,
             required: true
         },
+        imagenPerfil: {
+            type: String,
+        },
         enfermedades: [{
             type: schema.Types.ObjectId,
             ref: 'enfermedades'
+        }],
+        signosVitales: [{
+            type: schema.Types.ObjectId,
+            ref: 'signosVitales'
         }]
     },
     { timestamps: true }

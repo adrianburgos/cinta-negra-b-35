@@ -35,7 +35,12 @@ const addUsuarioAccion = async (usuario) => {
     }
 };
 
-const updateUsuarioEnfermedadAccion = async (filter, update) => {
+/**
+ * Actualiza al usuario indicado en el filtro
+ * @param {JSON} filter - valores para realizar la consulta
+ * @param {JSON} update - datos a ser acutalizados
+ */
+const updateUsuario = async (filter, update) => {
     try {
         return UsuarioModel.findOneAndUpdate(filter, update, { new: true }); // { new: true } para que devuelva el objeto actualizado
     } catch (error) {
@@ -76,10 +81,9 @@ const obtenerUsuarioAccion = async (usuario) => {
     }
 }
 
-
 export {
     addUsuarioAccion,
-    updateUsuarioEnfermedadAccion,
+    updateUsuario,
     buscarUsuarioAccion,
     iniciarSesionAccion,
     obtenerUsuarioAccion

@@ -6,6 +6,7 @@ const signoVitalSchema = new schema(
     {
         tipoSigno: {
             type: String,
+            enum: ["Presion", "Temperatura", "Glucosa"],
             required: true,
         },
         valorInferior: {
@@ -18,10 +19,6 @@ const signoVitalSchema = new schema(
         dimensionales: {
             type: String,
             required: true,
-        },
-        activo: {
-            type: Boolean,
-            default: true
         }
     },
     { timestamps: true }
