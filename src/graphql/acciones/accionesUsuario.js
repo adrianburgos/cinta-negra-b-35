@@ -40,7 +40,7 @@ const addUsuarioAccion = async (usuario) => {
  * @param {JSON} filter - valores para realizar la consulta
  * @param {JSON} update - datos a ser acutalizados
  */
-const updateUsuario = async (filter, update) => {
+const updateUsuarioAccion = async (filter, update) => {
     try {
         return UsuarioModel.findOneAndUpdate(filter, update, { new: true }); // { new: true } para que devuelva el objeto actualizado
     } catch (error) {
@@ -83,7 +83,7 @@ const obtenerUsuarioAccion = async (usuario) => {
 
 export {
     addUsuarioAccion,
-    updateUsuario,
+    updateUsuarioAccion,
     buscarUsuarioAccion,
     iniciarSesionAccion,
     obtenerUsuarioAccion

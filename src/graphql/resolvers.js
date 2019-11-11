@@ -1,6 +1,6 @@
 import {
     addUsuarioAccion,
-    updateUsuario,
+    updateUsuarioAccion,
     iniciarSesionAccion,
     obtenerUsuarioAccion
 } from './acciones/accionesUsuario';
@@ -67,7 +67,7 @@ const resolvers = {
                 const filter = { _id: usuario._id };
                 const update = { $push: { 'enfermedades': newEnfermedad._id } };
 
-                const updatedUsuario = await updateUsuario(filter, update);
+                const updatedUsuario = await updateUsuarioAccion(filter, update);
                 console.log("TCL: updatedUsuario", updatedUsuario)
                 return newEnfermedad
             } catch (error) {
@@ -91,7 +91,7 @@ const resolvers = {
 
                 const filter = { _id: usuario._id };
                 const update = { $push: { signosVitales: nuevoSigno._id } }; //el objeto debe de llamarse igual que el esquema
-                const usuarioActualizado = await updateUsuario(filter, update);
+                const usuarioActualizado = await updateUsuarioAccion(filter, update);
                 console.log("TCL: usuarioActualizado", usuarioActualizado)
 
                 return nuevoSigno;
