@@ -8,6 +8,15 @@ const addEnfermedadAccion = async (enfermedad, id) => {
     }
 }
 
+const updateEnfermedadAccion = async (filter, update) => {
+    try {
+        return await EnfermedadModel.findOneAndUpdate(filter, update, { new: true });
+    } catch (error) {
+        console.log("TCL: updateEnfermedadAccion -> error", error);
+    }
+}
+
 export {
     addEnfermedadAccion,
+    updateEnfermedadAccion,
 }

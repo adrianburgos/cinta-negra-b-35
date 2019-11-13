@@ -80,12 +80,14 @@ const typeDefs = gql`
 	# case, the "books" query returns an array of zero or more Books (defined above).
 	type Query {
         books: [Book] @AuthDirective,
-        obtenerUsuario: Usuario
+        getUsuario: Usuario
     }
     
     type Mutation {
         addUsuario(input: UsuarioInput): Token
         addEnfermedad(input: EnfermedadInput): Enfermedad @AuthDirective
+        updateEnfermedadNombre(nombre: String, enfermedadID: ID): Enfermedad @AuthDirective
+        updateEnfermedadDescipcion(descripcion: String, enfermedadID: ID): Enfermedad @AuthDirective
         addSignoVital(signo: SignoVitalInput): SignoVital @AuthDirective
         iniciarSesion(usuario: String, clave: String): Token
     }

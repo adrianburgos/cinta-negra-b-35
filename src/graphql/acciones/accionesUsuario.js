@@ -71,9 +71,9 @@ const iniciarSesionAccion = async (correoUsuario, clave) => {
     }
 }
 
-const obtenerUsuarioAccion = async (usuario) => {
+const getUsuarioAccion = async (usuario) => {
     try {
-        const infoUsuario = await UsuarioModel.findById(usuario._id).populate('enfermedades');
+        const infoUsuario = await UsuarioModel.findById(usuario._id).populate('enfermedades').populate('signosVitales');
         console.log(infoUsuario);
         return infoUsuario;
     } catch (error) {
@@ -86,5 +86,5 @@ export {
     updateUsuarioAccion,
     buscarUsuarioAccion,
     iniciarSesionAccion,
-    obtenerUsuarioAccion
+    getUsuarioAccion
 }

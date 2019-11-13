@@ -2,9 +2,12 @@ import {
     addUsuarioAccion,
     updateUsuarioAccion,
     iniciarSesionAccion,
-    obtenerUsuarioAccion
+    getUsuarioAccion
 } from './acciones/accionesUsuario';
-import { addEnfermedadAccion } from './acciones/accionesEnfermedad';
+import {
+    addEnfermedadAccion,
+    updateEnfermedadAccion
+} from './acciones/accionesEnfermedad';
 import { addSignoVitalAccion } from './acciones/accionesSignoVital';
 
 const books = [
@@ -35,10 +38,10 @@ const foods = [
 const resolvers = {
     Query: {
         books: () => books,
-        obtenerUsuario: async (parent, data, context, info) => {
+        getUsuario: async (parent, data, context, info) => {
             try {
                 const { usuario } = context;
-                return await obtenerUsuarioAccion(usuario);
+                return await getUsuarioAccion(usuario);
             } catch (error) {
                 console.log("TCL: error", error)
             }
@@ -74,6 +77,26 @@ const resolvers = {
                 console.log("TCL: error", error)
             }
         },
+        updateEnfermedadNombre: async (parent, data, context, info) => {
+            try {
+                const { nombre, enfermedadID } = data;
+                const filter = { _id: enfermedadID };
+                const update = { $set: { nombre } };
+                return await updateEnfermedadAccion(filter, update);
+            } catch (error) {
+                console.log("TCL: error", error);
+            }
+        },
+        updateEnfermedadDescipcion: async (parent, data, context, info) => {
+            try {
+                const { descripcion, enfermedadID } = data;
+                const filter = { _id: enfermedadID };
+                const update = { $set: { descripcion } };
+                return await updateEnfermedadAccion(filter, update);
+            } catch (error) {
+                console.log("TCL: error", error);
+            }
+        },
         iniciarSesion: async (parent, data, context, info) => {
             try {
                 const { usuario, clave } = data;
@@ -99,7 +122,7 @@ const resolvers = {
             } catch (error) {
                 console.log("TCL: error", error)
             }
-        }
+        },
     }
 };
 
