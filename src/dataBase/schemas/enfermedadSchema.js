@@ -17,9 +17,9 @@ const enfermedadSchema = new schema(
             type: String,
             required: true
         },
-        activa: {
+        curada: {
             type: Boolean,
-            default: true
+            default: false
         }
     },
     { timestamps: true }

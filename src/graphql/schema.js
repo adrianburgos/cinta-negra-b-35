@@ -48,7 +48,7 @@ const typeDefs = gql`
         tipo: String
         nombre: String
         descripcion: String
-        activa: Boolean
+        curada: Boolean
     }
     
     input EnfermedadInput {
@@ -63,7 +63,6 @@ const typeDefs = gql`
         valorInferior: String
         valorSuperior: String
         dimensionales: String
-        activo: Boolean
     }
 
     input SignoVitalInput{
@@ -88,6 +87,7 @@ const typeDefs = gql`
         addEnfermedad(input: EnfermedadInput): Enfermedad @AuthDirective
         updateEnfermedadNombre(nombre: String, enfermedadID: ID): Enfermedad @AuthDirective
         updateEnfermedadDescipcion(descripcion: String, enfermedadID: ID): Enfermedad @AuthDirective
+        updateEnfermedadCurada(curada: Boolean, enfermedadID: ID): Enfermedad @AuthDirective
         addSignoVital(signo: SignoVitalInput): SignoVital @AuthDirective
         iniciarSesion(usuario: String, clave: String): Token
     }

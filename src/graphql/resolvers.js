@@ -97,6 +97,16 @@ const resolvers = {
                 console.log("TCL: error", error);
             }
         },
+        updateEnfermedadCurada: async (parent, data, context, info) => {
+            try {
+                const { curada, enfermedadID } = data;
+                const filter = { _id: enfermedadID };
+                const update = { $set: { curada: curada} };
+                return await updateEnfermedadAccion(filter, update);
+            } catch (error) {
+                console.log("TCL: updateEnfermedadCurada: -> error", error)
+            }
+        },
         iniciarSesion: async (parent, data, context, info) => {
             try {
                 const { usuario, clave } = data;

@@ -8,6 +8,12 @@ const addEnfermedadAccion = async (enfermedad, id) => {
     }
 }
 
+/**
+ * Actualiza la enfermedad con el filtro (para la consulta)
+ * y el update indicando los campos que se desean modificar con sintaxis de mongoDB
+ * @param {JSON} filter - valores para realizar la consulta
+ * @param {JSON} update - datos a ser acutalizados
+ */
 const updateEnfermedadAccion = async (filter, update) => {
     try {
         return await EnfermedadModel.findOneAndUpdate(filter, update, { new: true });
