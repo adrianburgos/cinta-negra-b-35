@@ -48,6 +48,6 @@ const getContext = (req) => {
 }
 
 export {
-    AuthDirective,
     getContext,
+    AuthDirective
 }

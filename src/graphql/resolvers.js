@@ -2,7 +2,9 @@ import {
     addUsuarioAccion,
     updateUsuarioAccion,
     iniciarSesionAccion,
-    getUsuarioAccion
+    getUsuarioAccion,
+    getEnfermedadesFromUsuarioAccion,
+    getSignosVitalesFromUsuarioAccion
 } from './acciones/accionesUsuario';
 import {
     addEnfermedadAccion,
@@ -45,7 +47,23 @@ const resolvers = {
             } catch (error) {
                 console.log("TCL: error", error)
             }
-        }
+        },
+        getEnfermedades: async (parent, data, context, info) => {
+            try {
+                const { usuario } = context;
+                return await getEnfermedadesFromUsuarioAccion(usuario._id);
+            } catch (error) {
+                console.log("TCL: error", error);
+            }
+        },
+        getSignosVitales: async (parent, data, context, info) => {
+            try {
+                const { usuario } = context;
+                return await getSignosVitalesFromUsuarioAccion(usuario._id);
+            } catch (error) {
+                console.log("TCL: error", error);
+            }
+        },
     },
 
     Mutation: {
@@ -101,7 +119,7 @@ const resolvers = {
             try {
                 const { curada, enfermedadID } = data;
                 const filter = { _id: enfermedadID };
-                const update = { $set: { curada: curada} };
+                const update = { $set: { curada: curada } };
                 return await updateEnfermedadAccion(filter, update);
             } catch (error) {
                 console.log("TCL: updateEnfermedadCurada: -> error", error)

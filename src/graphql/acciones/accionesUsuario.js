@@ -31,7 +31,7 @@ const addUsuarioAccion = async (usuario) => {
         const token = crearToken(nuevoUsuario);
         return { token };
     } catch (error) {
-        console.log(error);
+        console.log("TCL: addUsuarioAccion -> error", error);
     }
 };
 
@@ -44,7 +44,7 @@ const updateUsuarioAccion = async (filter, update) => {
     try {
         return UsuarioModel.findOneAndUpdate(filter, update, { new: true }); // { new: true } para que devuelva el objeto actualizado
     } catch (error) {
-        console.log(error);
+        console.log("TCL: updateUsuarioAccion -> error", error);
     }
 }
 
@@ -52,7 +52,7 @@ const buscarUsuarioAccion = async (filter) => {
     try {
         return await UsuarioModel.findOne(filter);
     } catch (error) {
-        console.log(error);
+        console.log("TCL: buscarUsuarioAccion -> error", error);
     }
 }
 
@@ -67,17 +67,37 @@ const iniciarSesionAccion = async (correoUsuario, clave) => {
             return { token };
         }
     } catch (error) {
-        console.log(error);
+        console.log("TCL: iniciarSesionAccion -> error", error);
     }
 }
 
 const getUsuarioAccion = async (usuario) => {
     try {
         const infoUsuario = await UsuarioModel.findById(usuario._id).populate('enfermedades').populate('signosVitales');
-        console.log(infoUsuario);
+        console.log("TCL: getUsuarioAccion -> infoUsuario", infoUsuario)
         return infoUsuario;
     } catch (error) {
-        console.log(error);
+        console.log("TCL: getUsuarioAccion -> error", error);
+    }
+}
+
+const getEnfermedadesFromUsuarioAccion = async (usuarioID) => {
+    try {
+        const infoUsuario = await UsuarioModel.findById(usuarioID).populate('enfermedades');
+        const { enfermedades } = infoUsuario;
+        return enfermedades;
+    } catch (error) {
+        console.log("TCL: getEnfermedadesFromUsuarioAccion -> error", error)
+    }
+}
+
+const getSignosVitalesFromUsuarioAccion = async (usuarioID) => {
+    try {
+        const infoUsuario = await UsuarioModel.findById(usuarioID).populate('signosVitales');
+        const { signosVitales } = infoUsuario;
+        return signosVitales;
+    } catch (error) {
+        console.log("TCL: getSignosVitalesFromUsuarioAccion -> error", error)
     }
 }
 
@@ -86,5 +106,7 @@ export {
     updateUsuarioAccion,
     buscarUsuarioAccion,
     iniciarSesionAccion,
-    getUsuarioAccion
+    getUsuarioAccion,
+    getEnfermedadesFromUsuarioAccion,
+    getSignosVitalesFromUsuarioAccion,
 }

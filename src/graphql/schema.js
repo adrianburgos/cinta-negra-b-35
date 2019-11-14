@@ -78,8 +78,10 @@ const typeDefs = gql`
 	# clients can execute, along with the return type for each. In this
 	# case, the "books" query returns an array of zero or more Books (defined above).
 	type Query {
-        books: [Book] @AuthDirective,
-        getUsuario: Usuario
+        books: [Book] @AuthDirective
+        getUsuario: Usuario @AuthDirective
+        getEnfermedades: [Enfermedad] @AuthDirective
+        getSignosVitales: [SignoVital] @AuthDirective
     }
     
     type Mutation {
