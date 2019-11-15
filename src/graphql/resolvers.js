@@ -10,7 +10,10 @@ import {
     addEnfermedadAccion,
     updateEnfermedadAccion
 } from './acciones/accionesEnfermedad';
+
 import { addSignoVitalAccion } from './acciones/accionesSignoVital';
+
+import { storeUpload } from './acciones/utils/uploader'
 
 const books = [
     {
@@ -74,7 +77,17 @@ const resolvers = {
         // info - informacion del user agent (quien pide la informacion)
         addUsuario: async (parent, data, context, info) => {
             try {
-                return await addUsuarioAccion(data.input);
+                //sube el archivo a cloudinary
+                const { createReadStream } = await data.input.imagenPerfil;
+                const stream = createReadStream();
+                const { url } = await storeUpload(stream, 'image');
+
+                //registra usuario
+                const infoUsuario = {
+                    ...data.input,
+                    imagenPerfil: url
+                }
+                return await addUsuarioAccion(infoUsuario);
             } catch (error) {
                 console.log("TCL: error", error)
             }

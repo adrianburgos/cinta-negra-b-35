@@ -6,6 +6,8 @@ import { gql } from 'apollo-server';
 const typeDefs = gql`
 
     directive @AuthDirective on QUERY | FIELD_DEFINITION | FIELD
+
+    scalar Date
 	# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
 	# This "Book" type defines the queryable fields for every book in our data source.
@@ -63,6 +65,8 @@ const typeDefs = gql`
         valorInferior: String
         valorSuperior: String
         dimensionales: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     input SignoVitalInput{
